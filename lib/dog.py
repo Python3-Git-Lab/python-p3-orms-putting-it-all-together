@@ -55,6 +55,7 @@ class Dog:
     def new_from_db(cls, row):
         dog= cls(row[1], row[2])
         dog.id = row[0]
+        return dog
 
 # This class method should return a list of Dog instances for every record in the dogs table.
     @classmethod
@@ -73,16 +74,16 @@ class Dog:
         sql= """
             SELECT * FROM dogs WHERE name = ? LIMIT 1
         """
-        song= CURSOR.execute(sql, (name)).fetchone()
+        song= CURSOR.execute(sql, (name,)).fetchone()
         return cls.new_from_db(song)
 
 # This class method takes in an ID, and should return a single Dog instance for the corresponding record in the dogs table with that same ID. It behaves similarly to the find_by_name() method above.
     @classmethod
-    def find_by_id(cls , self):
+    def find_by_id(cls , id):
         sql= """
-            SELECT * FROM dogs WHERE name = ? LIMIT 1
+            SELECT * FROM dogs WHERE id = ? LIMIT 1
         """
-        song= CURSOR.execute(sql, (self.id)).fetchone()
+        song= CURSOR.execute(sql, (id,)).fetchone()
         return cls.new_from_db(song)
     
         
